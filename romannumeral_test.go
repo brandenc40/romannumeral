@@ -1,6 +1,7 @@
 package romannumeral
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -45,7 +46,7 @@ func TestFromInt(t *testing.T) {
 	}
 }
 
-func TestToInteger(t *testing.T) {
+func TestToInt(t *testing.T) {
 	for input, expected := range testCases {
 		out, err := ToInt(input)
 		if err != nil {
@@ -71,4 +72,20 @@ func BenchmarkToInteger(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_, _ = ToInt("DCCCXLIX")
 	}
+}
+
+func ExampleToInt() {
+	integer, err := ToInt("IV")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(integer == 4)
+}
+
+func ExampleFromInt() {
+	roman, err := FromInt(4)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(roman == "IV")
 }
