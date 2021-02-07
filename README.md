@@ -3,8 +3,15 @@
 Convert to and from roman numerals in Go.
 
 ```go
+package main 
+
+import (
+	"fmt"
+	"github.com/brandenc40/romannumeral"
+)
+
 func ExampleToInt() {
-	integer, err := ToInt("IV")
+	integer, err := romannumeral.ToInt("IV")
 	if err != nil {
 		panic(err)
 	}
@@ -12,7 +19,7 @@ func ExampleToInt() {
 }
 
 func ExampleFromInt() {
-	roman, err := FromInt(4)
+	roman, err := romannumeral.FromInt(4)
 	if err != nil {
 		panic(err)
 	}
