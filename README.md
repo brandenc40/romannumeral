@@ -1,5 +1,7 @@
 # Go Roman Numerals
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/brandenc40/romannumeral.svg)](https://pkg.go.dev/github.com/brandenc40/romannumeral)
+
 Convert to and from roman numerals in Go.
 
 ```go
