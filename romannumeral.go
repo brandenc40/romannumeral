@@ -45,8 +45,8 @@ func FromInt(input int) (string, error) {
 	return intToRoman(input), nil
 }
 
-// outOfBounds checks to ensure an input value is valid for roman numerals,
-// vinculum is used for values of 4,000 and greater
+// outOfBounds checks to ensure an input value is valid for roman numerals without the need of
+// vinculum (used for values of 4,000 and greater)
 func outOfBounds(input int) bool {
 	return input < _minRoman || input > _maxRoman
 }
