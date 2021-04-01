@@ -1,8 +1,7 @@
 // Converts between integers and Roman Numeral strings.
 //
 // Currently only supports Roman Numerals without viniculum (1-3999) and will throw an error for
-// numbers outside of that range.
-//
+// numbers outside of that range. See here for details on viniculum:
 // https://en.wikipedia.org/wiki/Roman_numerals#Large_numbers
 package romannumeral
 
@@ -63,7 +62,7 @@ func intToRoman(input int) string {
 }
 
 // ToInt converts a roman numeral string to an integer. Roman numerals for numbers
-// outside of the range 1 to 3999 will return an error.
+// outside of the range 1 to 3,999 will return an error.
 func ToInt(input string) (int, error) {
 	if input == "" {
 		return 0, nil
