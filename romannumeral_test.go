@@ -58,7 +58,15 @@ func TestToInt(t *testing.T) {
 	}
 	_, err := ToInt("IVCMXCIX")
 	if err == nil {
-		t.Errorf("ToInt(%d) expected an error", 0)
+		t.Error("ToInt(IVCMXCIX) expected an error")
+	}
+
+	val, err := ToInt("")
+	if val != 0 {
+		t.Errorf("ToInt(\"\") = %d; want 0", val)
+	}
+	if err != nil {
+		t.Errorf("ToInt(\"\") returned an error %s", err.Error())
 	}
 }
 
