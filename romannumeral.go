@@ -1,3 +1,9 @@
+// Converts between integers and Roman Numeral strings.
+//
+// Currently only supports Roman Numerals without viniculum (1-3999) and will throw an error for
+// numbers outside of that range.
+//
+// https://en.wikipedia.org/wiki/Roman_numerals#Large_numbers
 package romannumeral
 
 import (
@@ -5,16 +11,23 @@ import (
 	"strings"
 )
 
-type numeral struct {
-	val int
-	sym string
-}
+const (
+	_maxRoman = 3999
+	_minRoman = 1
+)
 
 var (
 	InvalidRomanNumeral = errors.New("invalid roman numeral")
 	IntegerOutOfBounds  = errors.New("integer must be between 1 and 3999")
 )
 
+// numeral describes the value and symbol of a single roman numeral
+type numeral struct {
+	val int
+	sym string
+}
+
+// _numerals are all unique numerals ordered from largest to smallest
 var _numerals = []numeral{
 	{1000, "M"}, {900, "CM"}, {500, "D"},
 	{400, "CD"}, {100, "C"}, {90, "XC"},
@@ -32,8 +45,10 @@ func FromInt(input int) (string, error) {
 	return intToRoman(input), nil
 }
 
+// outOfBounds checks to ensure an input value is valid for roman numerals,
+// vinculum is used for values of 4,000 and greater
 func outOfBounds(input int) bool {
-	return input < 1 || input > 3999
+	return input < _minRoman || input > _maxRoman
 }
 
 func intToRoman(input int) string {
