@@ -11,11 +11,11 @@ Quickly and efficiently convert to and from roman numerals in Go.
 goos: darwin
 goarch: arm64
 pkg: github.com/brandenc40/romannumeral
-BenchmarkIntToString-8          18437964                65.29 ns/op           64 B/op          1 allocs/op
-BenchmarkStringToInt-8          17102980                67.25 ns/op            0 B/op          0 allocs/op
-BenchmarkBytesToInt-8           18461336                64.77 ns/op            0 B/op          0 allocs/op
+BenchmarkIntToString-8          18048271                66.13 ns/op           24 B/op          2 allocs/op
+BenchmarkStringToInt-8          17572086                67.31 ns/op            0 B/op          0 allocs/op
+BenchmarkBytesToInt-8           17855149                64.93 ns/op            0 B/op          0 allocs/op
 PASS
-ok      github.com/brandenc40/romannumeral      5.128s
+ok      github.com/brandenc40/romannumeral      5.130s
 ```
 
 ### Example
