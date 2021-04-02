@@ -52,6 +52,15 @@ func IntToString(input int) (string, error) {
 	return string(intToRoman(input)), nil
 }
 
+// IntToBytes converts an integer value to a roman numeral byte array. An error is
+// returned if the integer is not between 1 and 3999.
+func IntToBytes(input int) ([]byte, error) {
+	if outOfBounds(input) {
+		return nil, IntegerOutOfBounds
+	}
+	return intToRoman(input), nil
+}
+
 // outOfBounds checks to ensure an input value is valid for roman numerals without the need of
 // vinculum (used for values of 4,000 and greater)
 func outOfBounds(input int) bool {

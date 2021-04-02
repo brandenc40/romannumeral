@@ -11,11 +11,13 @@ Quickly and efficiently convert to and from roman numerals in Go.
 goos: darwin
 goarch: arm64
 pkg: github.com/brandenc40/romannumeral
-BenchmarkIntToString-8          18048271                66.13 ns/op           24 B/op          2 allocs/op
-BenchmarkStringToInt-8          17572086                67.31 ns/op            0 B/op          0 allocs/op
-BenchmarkBytesToInt-8           17855149                64.93 ns/op            0 B/op          0 allocs/op
+BenchmarkIntToString-8          18160285                66.43 ns/op           24 B/op          2 allocs/op
+BenchmarkIntToBytes-8           18630670                63.68 ns/op           24 B/op          2 allocs/op
+BenchmarkStringToInt-8          17537406                67.26 ns/op            0 B/op          0 allocs/op
+BenchmarkBytesToInt-8           18248730                64.83 ns/op            0 B/op          0 allocs/op
 PASS
-ok      github.com/brandenc40/romannumeral      5.130s
+ok      github.com/brandenc40/romannumeral      6.283s
+
 ```
 
 ### Example
@@ -50,5 +52,13 @@ func ExampleIntToString() {
 		panic(err)
 	}
 	fmt.Println(roman == "IV") // True
+}
+
+func ExampleIntToBytes() {
+	roman, err := rom.IntToBytes(4)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(roman) == "IV") // True
 }
 ```

@@ -46,6 +46,31 @@ func TestIntToString(t *testing.T) {
 	}
 }
 
+func TestIntToBytes(t *testing.T) {
+	for expected, input := range testCases {
+		out, err := IntToBytes(input)
+		if err != nil {
+			t.Errorf("IntToBytes(%d) returned an error %s", input, err.Error())
+		}
+		if len(out) != len([]byte(expected)) {
+			t.Errorf("len(IntToBytes(%d)) = %d; want %d", input, len(out), len([]byte(expected)))
+		}
+		for i, char := range out {
+			if char != expected[i] {
+				t.Errorf("IntToBytes(%d) = %s; want %s", input, string(out), expected)
+			}
+		}
+	}
+	_, err := IntToBytes(100000)
+	if err == nil {
+		t.Errorf("IntToBytes(%d) expected an error", 100000)
+	}
+	_, err = IntToBytes(0)
+	if err == nil {
+		t.Errorf("IntToBytes(%d) expected an error", 0)
+	}
+}
+
 func TestStringToInt(t *testing.T) {
 	for input, expected := range testCases {
 		out, err := StringToInt(input)
@@ -111,6 +136,13 @@ func BenchmarkIntToString(b *testing.B) {
 	}
 }
 
+func BenchmarkIntToBytes(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = IntToBytes(3999)
+	}
+}
+
 func BenchmarkStringToInt(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
@@ -149,4 +181,12 @@ func ExampleIntToString() {
 		panic(err)
 	}
 	fmt.Println(roman == "IV") // True
+}
+
+func ExampleIntToBytes() {
+	roman, err := IntToBytes(4)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(roman) == "IV") // True
 }
