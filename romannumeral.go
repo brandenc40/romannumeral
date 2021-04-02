@@ -28,12 +28,18 @@ type numeral struct {
 
 // _numerals are all unique numerals ordered from largest to smallest
 var _numerals = []numeral{
-	{1000, []byte("M")}, {900, []byte("CM")},
-	{500, []byte("D")}, {400, []byte("CD")},
-	{100, []byte("C")}, {90, []byte("XC")},
-	{50, []byte("L")}, {40, []byte("XL")},
-	{10, []byte("X")}, {9, []byte("IX")},
-	{5, []byte("V")}, {4, []byte("IV")},
+	{1000, []byte("M")},
+	{900, []byte("CM")},
+	{500, []byte("D")},
+	{400, []byte("CD")},
+	{100, []byte("C")},
+	{90, []byte("XC")},
+	{50, []byte("L")},
+	{40, []byte("XL")},
+	{10, []byte("X")},
+	{9, []byte("IX")},
+	{5, []byte("V")},
+	{4, []byte("IV")},
 	{1, []byte("I")},
 }
 

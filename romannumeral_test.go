@@ -119,9 +119,10 @@ func BenchmarkStringToInt(b *testing.B) {
 }
 
 func BenchmarkBytesToInt(b *testing.B) {
+	in := []byte("MMMCMXCIX")
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		_, _ = BytesToInt([]byte("MMMCMXCIX"))
+		_, _ = BytesToInt(in)
 	}
 }
 
@@ -130,7 +131,16 @@ func ExampleStringToInt() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(integer == 4)
+	fmt.Println(integer == 4) // True
+}
+
+func ExampleBytesToInt() {
+	input := []byte("IV")
+	integer, err := BytesToInt(input)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(integer == 4) // True
 }
 
 func ExampleIntToString() {
@@ -138,5 +148,5 @@ func ExampleIntToString() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(roman == "IV")
+	fmt.Println(roman == "IV") // True
 }
