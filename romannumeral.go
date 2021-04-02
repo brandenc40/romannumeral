@@ -6,8 +6,8 @@
 package romannumeral
 
 import (
+	"bytes"
 	"errors"
-	"strings"
 )
 
 const (
@@ -23,25 +23,27 @@ var (
 // numeral describes the value and symbol of a single roman numeral
 type numeral struct {
 	val int
-	sym string
+	sym []byte
 }
 
 // _numerals are all unique numerals ordered from largest to smallest
 var _numerals = []numeral{
-	{1000, "M"}, {900, "CM"}, {500, "D"},
-	{400, "CD"}, {100, "C"}, {90, "XC"},
-	{50, "L"}, {40, "XL"}, {10, "X"},
-	{9, "IX"}, {5, "V"}, {4, "IV"},
-	{1, "I"},
+	{1000, []byte("M")}, {900, []byte("CM")},
+	{500, []byte("D")}, {400, []byte("CD")},
+	{100, []byte("C")}, {90, []byte("XC")},
+	{50, []byte("L")}, {40, []byte("XL")},
+	{10, []byte("X")}, {9, []byte("IX")},
+	{5, []byte("V")}, {4, []byte("IV")},
+	{1, []byte("I")},
 }
 
-// FromInt converts an integer value to a roman numeral string. An error is
+// IntToString converts an integer value to a roman numeral string. An error is
 // returned if the integer is not between 1 and 3999.
-func FromInt(input int) (string, error) {
+func IntToString(input int) (string, error) {
 	if outOfBounds(input) {
 		return "", IntegerOutOfBounds
 	}
-	return intToRoman(input), nil
+	return string(intToRoman(input)), nil
 }
 
 // outOfBounds checks to ensure an input value is valid for roman numerals without the need of
@@ -50,21 +52,29 @@ func outOfBounds(input int) bool {
 	return input < _minRoman || input > _maxRoman
 }
 
-func intToRoman(input int) string {
-	var output string
+func intToRoman(input int) []byte {
+	output := bytes.Buffer{}
 	for _, rom := range _numerals {
 		for input >= rom.val {
-			output += rom.sym
+			output.Write(rom.sym)
 			input -= rom.val
 		}
 	}
-	return output
+	return output.Bytes()
 }
 
-// ToInt converts a roman numeral string to an integer. Roman numerals for numbers
-// outside of the range 1 to 3,999 will return an error.
-func ToInt(input string) (int, error) {
-	if input == "" {
+// StringToInt converts a roman numeral string to an integer. Roman numerals for numbers
+// outside of the range 1 to 3,999 will return an error. Empty strings will return 0
+// with no error thrown.
+func StringToInt(input string) (int, error) {
+	return BytesToInt([]byte(input))
+}
+
+// BytesToInt converts a roman numeral byte array to an integer. Roman numerals for numbers
+// outside of the range 1 to 3,999 will return an error. Nil or empty []byte will return 0
+// with no error thrown.
+func BytesToInt(input []byte) (int, error) {
+	if input == nil || len(input) == 0 {
 		return 0, nil
 	}
 	if output, ok := romanToInt(input); ok {
@@ -73,10 +83,10 @@ func ToInt(input string) (int, error) {
 	return 0, InvalidRomanNumeral
 }
 
-func romanToInt(input string) (int, bool) {
+func romanToInt(input []byte) (int, bool) {
 	var output int
 	for _, rom := range _numerals {
-		for strings.HasPrefix(input, rom.sym) {
+		for bytes.HasPrefix(input, rom.sym) {
 			output += rom.val
 			input = input[len(rom.sym):]
 		}

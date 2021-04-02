@@ -26,72 +26,115 @@ var testCases = map[string]int{
 	"MMMCMLXXIX": 3979, "MMMCMXCIX": 3999,
 }
 
-func TestFromInt(t *testing.T) {
+func TestIntToString(t *testing.T) {
 	for expected, input := range testCases {
-		out, err := FromInt(input)
+		out, err := IntToString(input)
 		if err != nil {
-			t.Errorf("FromInt(%d) returned an error %s", input, err.Error())
+			t.Errorf("IntToString(%d) returned an error %s", input, err.Error())
 		}
 		if out != expected {
-			t.Errorf("FromInt(%d) = %s; want %s", input, out, expected)
+			t.Errorf("IntToString(%d) = %s; want %s", input, out, expected)
 		}
 	}
-	_, err := FromInt(100000)
+	_, err := IntToString(100000)
 	if err == nil {
-		t.Errorf("FromInt(%d) expected an error", 100000)
+		t.Errorf("IntToString(%d) expected an error", 100000)
 	}
-	_, err = FromInt(0)
+	_, err = IntToString(0)
 	if err == nil {
-		t.Errorf("FromInt(%d) expected an error", 0)
+		t.Errorf("IntToString(%d) expected an error", 0)
 	}
 }
 
-func TestToInt(t *testing.T) {
+func TestStringToInt(t *testing.T) {
 	for input, expected := range testCases {
-		out, err := ToInt(input)
+		out, err := StringToInt(input)
 		if err != nil {
-			t.Errorf("ToInt(%s) returned an error %s", input, err.Error())
+			t.Errorf("StringToInt(%s) returned an error %s", input, err.Error())
 		}
 		if out != expected {
-			t.Errorf("ToInt(%s) = %d; want %d", input, out, expected)
+			t.Errorf("StringToInt(%s) = %d; want %d", input, out, expected)
 		}
 	}
-	_, err := ToInt("IVCMXCIX")
+	_, err := StringToInt("IVCMXCIX")
 	if err == nil {
-		t.Error("ToInt(IVCMXCIX) expected an error")
+		t.Error("StringToInt(IVCMXCIX) expected an error")
 	}
 
-	val, err := ToInt("")
+	val, err := StringToInt("")
 	if val != 0 {
-		t.Errorf("ToInt(\"\") = %d; want 0", val)
+		t.Errorf("StringToInt(\"\") = %d; want 0", val)
 	}
 	if err != nil {
-		t.Errorf("ToInt(\"\") returned an error %s", err.Error())
+		t.Errorf("StringToInt(\"\") returned an error %s", err.Error())
 	}
 }
 
-func BenchmarkToRomanNumeral(b *testing.B) {
+func TestBytesToInt(t *testing.T) {
+	for input, expected := range testCases {
+		out, err := BytesToInt([]byte(input))
+		if err != nil {
+			t.Errorf("StringToInt(%s) returned an error %s", input, err.Error())
+		}
+		if out != expected {
+			t.Errorf("StringToInt(%s) = %d; want %d", input, out, expected)
+		}
+	}
+	_, err := BytesToInt([]byte("IVCMXCIX"))
+	if err == nil {
+		t.Error("BytesToInt(IVCMXCIX) expected an error")
+	}
+
+	var in []byte
+	val, err := BytesToInt(in)
+	if val != 0 {
+		t.Errorf("BytesToInt(nil) = %d; want 0", val)
+	}
+	if err != nil {
+		t.Errorf("BytesToInt(nil) returned an error %s", err.Error())
+	}
+
+	in = []byte("")
+	val, err = BytesToInt(in)
+	if val != 0 {
+		t.Errorf("BytesToInt([]byte(\"\")) = %d; want 0", val)
+	}
+	if err != nil {
+		t.Errorf("BytesToInt([]byte(\"\")) returned an error %s", err.Error())
+	}
+}
+
+func BenchmarkIntToString(b *testing.B) {
+	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		_, _ = FromInt(2999)
+		_, _ = IntToString(3999)
 	}
 }
 
-func BenchmarkToInteger(b *testing.B) {
+func BenchmarkStringToInt(b *testing.B) {
+	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		_, _ = ToInt("DCCCXLIX")
+		_, _ = StringToInt("MMMCMXCIX")
 	}
 }
 
-func ExampleToInt() {
-	integer, err := ToInt("IV")
+func BenchmarkBytesToInt(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		_, _ = BytesToInt([]byte("MMMCMXCIX"))
+	}
+}
+
+func ExampleStringToInt() {
+	integer, err := StringToInt("IV")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(integer == 4)
 }
 
-func ExampleFromInt() {
-	roman, err := FromInt(4)
+func ExampleIntToString() {
+	roman, err := IntToString(4)
 	if err != nil {
 		panic(err)
 	}
