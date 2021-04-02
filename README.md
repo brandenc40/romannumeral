@@ -28,19 +28,27 @@ import (
 	rom "github.com/brandenc40/romannumeral"
 )
 
-func ExampleRomanToInt() {
-	integer, err := rom.ToInt("IV")
+func ExampleStringToInt() {
+	integer, err := rom.StringToInt("IV")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(integer == 4)
+	fmt.Println(integer == 4) // True
 }
 
-func ExampleIntToRoman() {
-	roman, err := rom.FromInt(4)
+func ExampleBytesToInt() {
+	integer, err := rom.BytesToInt([]byte("IV"))
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(roman == "IV")
+	fmt.Println(integer == 4) // True
+}
+
+func ExampleIntToString() {
+	roman, err := rom.IntToString(4)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(roman == "IV") // True
 }
 ```

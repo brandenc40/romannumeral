@@ -53,14 +53,14 @@ func outOfBounds(input int) bool {
 }
 
 func intToRoman(input int) []byte {
-	output := bytes.Buffer{}
+	var output []byte
 	for _, rom := range _numerals {
 		for input >= rom.val {
-			output.Write(rom.sym)
+			output = append(output, rom.sym...)
 			input -= rom.val
 		}
 	}
-	return output.Bytes()
+	return output
 }
 
 // StringToInt converts a roman numeral string to an integer. Roman numerals for numbers
