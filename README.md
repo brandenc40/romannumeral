@@ -3,7 +3,10 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/brandenc40/romannumeral.svg)](https://pkg.go.dev/github.com/brandenc40/romannumeral)
 [![codecov](https://codecov.io/gh/brandenc40/romannumeral/branch/master/graph/badge.svg?token=AS7IBSTE36)](https://codecov.io/gh/brandenc40/romannumeral)
     
-Quickly and efficiently convert to and from roman numerals in Go.
+## Quickly and efficiently convert to and from roman numerals in Go.
+
+A reliable module using the most efficient methods possible for converting between
+roman numerals and integers in Go. Algorithms adopted from [here](https://rosettacode.org/wiki/Roman_numerals).
 
 ### Benchmark Results
 
